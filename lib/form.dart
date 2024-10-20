@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 import 'main.dart';
 
 class FormPage extends StatefulWidget {
@@ -10,7 +9,6 @@ class FormPage extends StatefulWidget {
 }
 
 class FormPageState extends State<FormPage> {
-  late VideoPlayerController _controller;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _roleController = TextEditingController();
   final TextEditingController _schoolController = TextEditingController();
@@ -18,26 +16,7 @@ class FormPageState extends State<FormPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.asset('assets/background.mp4')
-      ..initialize().then((_) {
-        if (mounted) {
-          setState(() {
-            if (_controller.value.isInitialized) {
-              _controller.play();
-              _controller.setLooping(true);
-            }
-          });
-        }
-      }).catchError((error) {
-        print('Video initialization error: $error');
-      });
-  }
-
-  @override
   void dispose() {
-    _controller.dispose();
     _usernameController.dispose();
     _roleController.dispose();
     _schoolController.dispose();
@@ -67,149 +46,106 @@ class FormPageState extends State<FormPage> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          _controller.value.isInitialized
-              ? FittedBox(
-                  fit: BoxFit.cover,
-                  child: SizedBox(
-                    width: _controller.value.size.width,
-                    height: _controller.value.size.height,
-                    child: VideoPlayer(_controller),
-                  ),
-                )
-              : Container(),
           Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black,
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.7),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text(
-                      'Welcome!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
+              child: Center( // Mengatur agar form berada di tengah
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[800], // Warna latar belakang kotak
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(0, 4),
+                        blurRadius: 8,
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Please fill in your details below:',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Spacer(),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: _usernameController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Username',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your username';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _roleController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Role',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your role';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _schoolController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'School',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your school';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _descriptionController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Description',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a description';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    const Spacer(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton(
-                        onPressed: _submitForm,
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min, // Agar kolom tidak mengembang
+                      children: <Widget>[
+                        const Text(
+                          'Welcome!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
                           ),
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.transparent,
-                          textStyle: const TextStyle(color: Colors.white),
-                          disabledForegroundColor: Colors.red,
                         ),
-                        child: const Text('Submit'),
-                      ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Please fill in your details below:',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        _buildTextFormField(_usernameController, 'Username'),
+                        const SizedBox(height: 16),
+                        _buildTextFormField(_roleController, 'Role'),
+                        const SizedBox(height: 16),
+                        _buildTextFormField(_schoolController, 'School'),
+                        const SizedBox(height: 16),
+                        _buildTextFormField(_descriptionController, 'Description'),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _submitForm,
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                            ),
+                            child: const Text('Submit'),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTextFormField(TextEditingController controller, String label) {
+    return TextFormField(
+      controller: controller,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.white),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.blue),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your $label';
+        }
+        return null;
+      },
     );
   }
 }

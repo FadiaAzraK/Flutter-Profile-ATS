@@ -9,14 +9,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Starbucks', home: const FormPage(), routes: {
-      '/main': (context) => const Siren(
-            username: '',
-            role: '',
-            school: '',
-            description: '',
-          ),
-    });
+    return MaterialApp(
+      title: 'Fdia',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black,
+      ),
+      home: const FormPage(),
+      routes: {
+        '/main': (context) => const Siren(
+          username: '',
+          role: '',
+          school: '',
+          description: '',
+        ),
+      },
+    );
   }
 }
 
@@ -37,7 +44,13 @@ class Siren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Starbucks',
+      title: 'Siren',
+      theme: ThemeData.dark().copyWith(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+      ),
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: PreferredSize(
@@ -47,22 +60,19 @@ class Siren extends StatelessWidget {
             child: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFFB22627), Color(0xFFF05D5E)],
+                  colors: [Colors.blue, Color(0xFF1E88E5)], // Mengganti warna gradien menjadi biru
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
               ),
               child: AppBar(
-                elevation: 0.0,
-                backgroundColor: Colors.transparent,
                 leading: IconButton(
                   icon: const Icon(Icons.logout),
                   color: Colors.white,
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const FormPage()),
+                      MaterialPageRoute(builder: (context) => const FormPage()),
                     );
                   },
                 ),
@@ -91,8 +101,8 @@ class Siren extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         gradient: const LinearGradient(
                           colors: [
-                            Color.fromARGB(255, 255, 240, 213),
-                            Color.fromARGB(255, 219, 233, 255)
+                            Color.fromARGB(255, 48, 48, 48),
+                            Color.fromARGB(255, 80, 80, 80)
                           ],
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
@@ -123,6 +133,7 @@ class Siren extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                   fontFamily: 'Roboto',
                                 ),
                               ),
@@ -132,6 +143,7 @@ class Siren extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                   fontFamily: 'Roboto',
                                 ),
                               ),
@@ -140,6 +152,7 @@ class Siren extends StatelessWidget {
                                 description,
                                 style: const TextStyle(
                                   fontSize: 16,
+                                  color: Colors.white,
                                   fontFamily: 'Roboto',
                                 ),
                                 textAlign: TextAlign.center,
@@ -149,33 +162,11 @@ class Siren extends StatelessWidget {
                                 school,
                                 style: const TextStyle(
                                   fontSize: 16,
+                                  color: Colors.white,
                                   fontFamily: 'Roboto',
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                              // const SizedBox(height: 20),
-                              // ElevatedButton(
-                              //   style: ElevatedButton.styleFrom(
-                              //     backgroundColor: Colors.red,
-                              //     // color: Colors.white,
-                              //   ),
-                              //   onPressed: () {
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //         builder: (context) => const ProfilePage(),
-                              //       ),
-                              //     );
-                              //   },
-                              //   child: const Text(
-                              //     'Go to Profile',
-                              //     style: TextStyle(
-                              //       fontSize: 16,
-                              //       fontFamily: 'Roboto',
-                              //       color: Colors.white,
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
@@ -191,152 +182,3 @@ class Siren extends StatelessWidget {
     );
   }
 }
-
-// class ProfilePage extends StatelessWidget {
-//   const ProfilePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Profile'),
-//       ),
-//       body: Stack(
-//         children: [
-//           Container(
-//             decoration: const BoxDecoration(
-//               image: DecorationImage(
-//                 image: AssetImage('assets/bg2.jpg'),
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: ListView(
-//               children: [
-//                 Column(
-//                   children: [
-//                     CircleAvatar(
-//                       radius: 48,
-//                       backgroundColor: Colors.white,
-//                       child: ClipOval(
-//                         child: Image.asset(
-//                           "assets/logo.png",
-//                           width: 90,
-//                           height: 90,
-//                           fit: BoxFit.cover,
-//                         ),
-//                       ),
-//                     ),
-//                     const SizedBox(height: 10),
-//                     const Text(
-//                       'Vincensius Marcel Suhendar',
-//                       style: TextStyle(
-//                         fontSize: 24,
-//                         fontWeight: FontWeight.bold,
-//                         fontFamily: 'Roboto',
-//                         color: Colors.white,
-//                       ),
-//                       textAlign: TextAlign.center,
-//                     ),
-//                   ],
-//                 ),
-//                 const SizedBox(height: 20),
-//                 Card(
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(15),
-//                   ),
-//                   child: const Padding(
-//                     padding: EdgeInsets.all(16.0),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           'About',
-//                           style: TextStyle(
-//                             fontSize: 20,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Roboto',
-//                           ),
-//                         ),
-//                         SizedBox(height: 10),
-//                         Text(
-//                           'I am an aspiring student who wishes to become the absolute best version of myself.',
-//                           style: TextStyle(
-//                             fontSize: 16,
-//                             fontFamily: 'Roboto',
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 20),
-//                 Card(
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(15),
-//                   ),
-//                   child: const Padding(
-//                     padding: EdgeInsets.all(16.0),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           'History',
-//                           style: TextStyle(
-//                             fontSize: 20,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Roboto',
-//                           ),
-//                         ),
-//                         SizedBox(height: 10),
-//                         Text(
-//                           'I have been attending SMK Wikrama learning web and game development for the past 2 years, and have real work experience as an intern in Argenta.',
-//                           style: TextStyle(
-//                             fontSize: 16,
-//                             fontFamily: 'Roboto',
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 20),
-//                 Card(
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(15),
-//                   ),
-//                   child: const Padding(
-//                     padding: EdgeInsets.all(16.0),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           'Skills',
-//                           style: TextStyle(
-//                             fontSize: 20,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Roboto',
-//                           ),
-//                         ),
-//                         SizedBox(height: 10),
-//                         Text(
-//                           '• Laravel\n• Python\n• Javascript\n• Express\n• Vue\n• Tailwind\n• Flutter\n• MySQL\n• PostgreSQL\n• C#\n• Photoshop\n• Unity\n\n And the ability to learn more.',
-//                           style: TextStyle(
-//                             fontSize: 16,
-//                             fontFamily: 'Roboto',
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
